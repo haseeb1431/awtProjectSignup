@@ -1,0 +1,52 @@
+CREATE TABLE public.projects
+(
+    "ProjectId" serial NOT NULL,
+    "Title" character varying(500),
+    "Desc" character varying(5000),
+    "CategoryID" integer,
+    "Prereq" character varying(500),
+    "MaxStudent" integer,
+    PRIMARY KEY ("ProjectId")
+)
+WITH (
+    OIDS = FALSE
+);
+
+ALTER TABLE public.projects
+    OWNER to postgres;
+	
+
+
+
+
+CREATE TABLE public."Category"
+(
+    "categoryId" serial NOT NULL,
+    "ShortName" character varying(100),
+    "LongName" character varying(500),
+    PRIMARY KEY ("categoryId")
+)
+WITH (
+    OIDS = FALSE
+);
+
+ALTER TABLE public."Category"
+    OWNER to postgres;
+
+
+
+
+CREATE TABLE public."StudentProject"
+(
+    "ID" serial NOT NULL,
+    "StudentID" integer,
+    "ProjectID" integer,
+    "Preference" integer,
+    PRIMARY KEY ("ID")
+)
+WITH (
+    OIDS = FALSE
+);
+
+ALTER TABLE public."StudentProject"
+    OWNER to postgres;	
