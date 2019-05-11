@@ -60,6 +60,14 @@ git commit -a -m "what are the changes you did"
 git push
 ```
 
+## Machine setup
+
+```
+npm i bcryptjs body-parser concurrently express is-empty jsonwebtoken mongoose passport passport-jwt validator
+npm i -D nodemon
+
+npm run server # run the app
+```
 
 ## Author
 Anubhav Guha, Pradyumna Kashyap, Haseeb Asif
