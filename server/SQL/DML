@@ -2,7 +2,7 @@ CREATE TABLE public.projects
 (
     "ProjectId" serial NOT NULL,
     "Title" character varying(500),
-    "Desc" character varying(5000),
+    "Description" character varying(5000),
     "CategoryID" integer,
     "Prereq" character varying(500),
     "MaxStudent" integer,

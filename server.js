@@ -2,11 +2,14 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const http = require('http');
-const db = require('./projectsQueries');
+
 const cors = require('cors')
 require('dotenv').config()
 // Set up the express app
 const app = express();
+
+const proj = require('./server/models/projects');
+const user = require('./server/models/users');
 
 //#region App settings
 // Log requests to the console.
@@ -19,12 +22,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //#endregion
 
 //#region Routing
+app.get('/projects', proj.getProjects)
+app.get('/projects/:id', proj.getProjectById)
+app.post('/projects', proj.createProject)
+app.put('/projects/:id', proj.updateProject)
+app.delete('/projects/:id', proj.deleteProject)
 
-app.get('/projects', db.getProjects)
-app.get('/projects/:id', db.getProjectById)
-app.post('/projects', db.createProject)
-app.put('/projects/:id', db.updateProject)
-app.delete('/projects/:id', db.deleteProject)
+app.get('/users', user.getUsers)
+app.get('/users/:id', user.getUserById)
+app.post('/users', user.createUser)
+app.put('/users/:id', user.updateUser)
+app.delete('/users/:id', user.deleteUser)
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 // app.get('*', (req, res) => res.status(200).send({
@@ -39,6 +47,5 @@ app.set('port', port);
 
 const server = http.createServer(app);
 server.listen(port);
-
 
 module.exports = app;
