@@ -10,6 +10,7 @@ const app = express();
 
 const proj = require('./server/models/projects');
 const user = require('./server/models/users');
+const student = require('./server/models/students');
 
 //#region App settings
 // Log requests to the console.
@@ -33,6 +34,12 @@ app.get('/users/:id', user.getUserById)
 app.post('/users', user.createUser)
 app.put('/users/:id', user.updateUser)
 app.delete('/users/:id', user.deleteUser)
+
+app.get('/students', student.getStudents)
+app.get('/students/:id', student.getStudentById)
+app.post('/students', student.createStudent)
+app.put('/students/:id', student.updateStudent)
+app.delete('/students/:id', student.deleteStudent)
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 // app.get('*', (req, res) => res.status(200).send({
