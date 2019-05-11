@@ -1,3 +1,46 @@
+-- Table: public."Users"
+
+-- DROP TABLE public."Users";
+
+CREATE TABLE public."Users"
+(
+    "UserID" integer NOT NULL DEFAULT nextval('"Users_UserID_seq"'::regclass),
+    "UserEmail" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "UserPassword" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "UserType" integer,
+    "CreatedDate" date,
+    CONSTRAINT "Users_pkey" PRIMARY KEY ("UserID")
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Users"
+    OWNER to postgres;
+
+
+-- Table: public."Students"
+
+-- DROP TABLE public."Students";
+
+CREATE TABLE public."Students"
+(
+    "StudentID" bigint,
+    "StudentName" character varying(50) COLLATE pg_catalog."default",
+    "StudentEmail" character varying(50) COLLATE pg_catalog."default",
+    "CreatedDate" date
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Students"
+    OWNER to postgres;
+
+
+
 CREATE TABLE public.projects
 (
     "ProjectId" serial NOT NULL,
