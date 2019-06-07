@@ -1,15 +1,7 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'awtProjectSignup',
-    password: 123,
-    port: 5432,
-})
-
+const { pool } = require('./db');
 
 const getUsers = (request, response) => {
-    pool.query('SELECT * FROM "Users" ORDER BY "UserID" ASC', (error, results) => {
+    pool.query('SELECT * FROM "awt"."Users" ORDER BY "UserID" ASC', (error, results) => {
         if (error) {
             throw error
         }
@@ -20,7 +12,7 @@ const getUsers = (request, response) => {
 const getUserById = (request, response) => {
     const id = parseInt(request.params.id)
 
-    pool.query('SELECT * FROM "Users" WHERE "UserID" = $1', [id], (error, results) => {
+    pool.query('SELECT * FROM "awt"."Users" WHERE "UserID" = $1', [id], (error, results) => {
         if (error) {
             throw error
         }
@@ -30,14 +22,14 @@ const getUserById = (request, response) => {
 
 
 const createUser = (request, response) => {
-    const { userid, email, password } = request.body
+    const { email, password, usertype } = request.body
 
-    pool.query('INSERT INTO "Users" ("UserID", "UserEmail", "UserPassword") VALUES ($1, $2, $3)',
-        [userid, email, password], (error, result) => {
+    pool.query('INSERT INTO "awt"."Users" ("UserEmail", "UserPassword", "UserType") VALUES ($1, $2, $3) RETURNING *',
+        [email, password, usertype], (error, result) => {
             if (error) {
                 throw error
             }
-            response.status(201).send(`${result.rowCount} User added `)
+            response.status(201).json(result.rows[0])
         })
 }
 
@@ -47,13 +39,13 @@ const updateUser = (request, response) => {
     const { email, password } = request.body
 
     pool.query(
-        'UPDATE "Users" SET "UserEmail" = $1, "UserPassword" = $2 WHERE "UserID" = $3 ',
+        'UPDATE "awt"."Users" SET "UserEmail" = $1, "UserPassword" = $2 WHERE "UserID" = $3 ',
         [email, password, id],
         (error, results) => {
             if (error) {
                 throw error
             }
-            response.status(200).send(`Users updated: ${results.rowCount}`)
+            response.status(200).json(results.rows[0])
         }
     )
 }
@@ -62,7 +54,7 @@ const updateUser = (request, response) => {
 const deleteUser = (request, response) => {
     const id = parseInt(request.params.id)
 
-    pool.query('DELETE FROM Users WHERE "ProjectId" = $1', [id], (error, results) => {
+    pool.query('DELETE FROM "awt"."Users" WHERE "ProjectId" = $1', [id], (error, results) => {
         if (error) {
             throw error
         }

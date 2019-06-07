@@ -1,11 +1,4 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'awtProjectSignup',
-    password: 123,
-    port: 5432,
-})
+const { pool } = require('./db');
 
 const getProjects = (request, response) => {
     pool.query('SELECT * FROM projects ORDER BY "ProjectId" ASC', (error, results) => {

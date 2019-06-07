@@ -1,8 +1,9 @@
--- Table: public."Users"
+CREATE SCHEMA IF NOT EXISTS awt
 
--- DROP TABLE public."Users";
+--Create  sequence "Users_UserID_seq";
 
-CREATE TABLE public."Users"
+
+CREATE TABLE awt."Users"
 (
     "UserID" integer NOT NULL DEFAULT nextval('"Users_UserID_seq"'::regclass),
     "UserEmail" character varying(50) COLLATE pg_catalog."default" NOT NULL,
@@ -16,15 +17,13 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Users"
-    OWNER to postgres;
-
+ALTER TABLE awt."Users"
+    OWNER to "ioslpg";
 
 -- Table: public."Students"
 
--- DROP TABLE public."Students";
 
-CREATE TABLE public."Students"
+CREATE TABLE awt."Students"
 (
     "StudentID" bigint,
     "StudentName" character varying(50) COLLATE pg_catalog."default",
@@ -36,12 +35,14 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Students"
-    OWNER to postgres;
+ALTER TABLE awt."Students"
+    OWNER to ioslpg;
 
 
+--Table projects
 
-CREATE TABLE public.projects
+
+CREATE TABLE awt.projects
 (
     "ProjectId" serial NOT NULL,
     "Title" character varying(500),
@@ -55,14 +56,14 @@ WITH (
     OIDS = FALSE
 );
 
-ALTER TABLE public.projects
-    OWNER to postgres;
+ALTER TABLE awt.projects
+    OWNER to ioslpg;
 	
+--Table Category
 
 
 
-
-CREATE TABLE public."Category"
+CREATE TABLE awt."Category"
 (
     "categoryId" serial NOT NULL,
     "ShortName" character varying(100),
@@ -73,13 +74,13 @@ WITH (
     OIDS = FALSE
 );
 
-ALTER TABLE public."Category"
-    OWNER to postgres;
+ALTER TABLE awt."Category"
+    OWNER to ioslpg;
 
 
 
 
-CREATE TABLE public."StudentProject"
+CREATE TABLE awt."StudentProject"
 (
     "ID" serial NOT NULL,
     "StudentID" integer,
@@ -91,5 +92,5 @@ WITH (
     OIDS = FALSE
 );
 
-ALTER TABLE public."StudentProject"
-    OWNER to postgres;	
+ALTER TABLE awt."StudentProject"
+    OWNER to ioslpg;	
