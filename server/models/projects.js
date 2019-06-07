@@ -1,7 +1,7 @@
 const { pool } = require('./db');
 
 const getProjects = (request, response) => {
-    pool.query('SELECT * FROM projects ORDER BY "ProjectId" ASC', (error, results) => {
+    pool.query('SELECT * FROM "awt".projects left join "awt"."Category" on "projects"."CategoryID"  = "Category"."categoryId" ORDER BY "ProjectId" ASC', (error, results) => {
         if (error) {
             throw error
         }
@@ -12,7 +12,7 @@ const getProjects = (request, response) => {
 const getProjectById = (request, response) => {
     const id = parseInt(request.params.id)
 
-    pool.query('SELECT * FROM projects WHERE "ProjectId" = $1', [id], (error, results) => {
+    pool.query('SELECT * FROM "awt".projects WHERE "ProjectId" = $1', [id], (error, results) => {
         if (error) {
             throw error
         }
@@ -22,46 +22,39 @@ const getProjectById = (request, response) => {
 
 
 const createProject = (request, response) => {
-    const { title, desc, categoryId, Prereq, MaxStudent } = request.body
+    const { Title, Description, CategoryID, Prereq, MaxStudent } = request.body;
 
-    console.log(title)
-    console.log(desc)
-    console.log(categoryId)
-    console.log(Prereq)
-    console.log(MaxStudent)
-
-    pool.query('INSERT INTO projects ("Title", "Description", "CategoryID", "Prereq", "MaxStudent") VALUES ($1, $2, $3, $4, $5) RETURNING "ProjectId"',
-        [title, desc, categoryId, Prereq, MaxStudent], (error, result) => {
+    pool.query('INSERT INTO "awt".projects ("Title", "Description", "CategoryID", "Prereq", "MaxStudent") VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        [Title, Description, CategoryID, Prereq, MaxStudent], (error, result) => {
             if (error) {
                 throw error
             }
-            response.status(201).send(`Project added with ID: ${result.rows[0].ProjectId}`)
-            //${result.rowCount} ${result.command}
-        })
+            response.status(201).json(result.rows[0]);            
+        });
 }
 
 
 const updateProject = (request, response) => {
     const id = parseInt(request.params.id)
-    const { title, desc, categoryId, Prereq, MaxStudent } = request.body
+    const { Title, Description, CategoryID, Prereq, MaxStudent  } = request.body
 
     pool.query(
-        'UPDATE projects SET "Title" = $1, "Description" = $2, "CategoryID" = $3, "Prereq" = $4, "MaxStudent" = $5 WHERE "ProjectId" = $6 RETURNING "ProjectId"',
-        [title, desc, categoryId, Prereq, MaxStudent, id],
+        'UPDATE "awt".projects SET "Title" = $1, "Description" = $2, "CategoryID" = $3, "Prereq" = $4, "MaxStudent" = $5 WHERE "ProjectId" = $6 RETURNING "ProjectId"',
+        [Title, Description, CategoryID, Prereq, MaxStudent , id],
         (error, results) => {
             if (error) {
                 throw error
             }
-            response.status(200).send(`Project modified with ID: ${results.rows[0].ProjectId}`)
+            response.status(200).json(results.rows[0]);
         }
-    )
+    );
 }
 
 
 const deleteProject = (request, response) => {
     const id = parseInt(request.params.id)
 
-    pool.query('DELETE FROM projects WHERE "ProjectId" = $1', [id], (error, results) => {
+    pool.query('DELETE FROM "awt".projects WHERE "ProjectId" = $1', [id], (error, results) => {
         if (error) {
             throw error
         }

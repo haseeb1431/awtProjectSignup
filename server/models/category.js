@@ -1,7 +1,7 @@
 const { pool } = require('./db');
 
 const getCategory = (request, response) => {
-    pool.query('SELECT * FROM "Category"', (error, results) => {
+    pool.query('SELECT * FROM "awt"."Category"', (error, results) => {
         if (error) {
             throw error
         }
@@ -12,7 +12,7 @@ const getCategory = (request, response) => {
 const getCategoryById = (request, response) => {
     const id = parseInt(request.params.id)
 
-    pool.query('SELECT * FROM "Category" WHERE "categoryId" = $1', [id], (error, results) => {
+    pool.query('SELECT * FROM "awt"."Category" WHERE "categoryId" = $1', [id], (error, results) => {
         if (error) {
             throw error
         }
@@ -22,15 +22,15 @@ const getCategoryById = (request, response) => {
 
 
 const createCategory = (request, response) => {
-    const { shortname, longname} = request.body
+    const { shortname, longname } = request.body
 
-    pool.query('INSERT INTO "Category" ("ShortName", "LongName") VALUES ($1, $2) RETURNING "categoryId"',
+    pool.query('INSERT INTO "awt"."Category" ("ShortName", "LongName") VALUES ($1, $2) RETURNING *',
         [shortname, longname], (error, result) => {
             if (error) {
                 throw error
             }
-            response.status(201).send(`Project added with ID: ${result.rows[0].categoryId}`)
-        })
+            response.status(201).json(result.rows[0]);
+        });
 }
 
 
