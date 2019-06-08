@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //#region Routing
 app.get('/projects', proj.getProjects)
 app.get('/projects/:id', proj.getProjectById)
+app.get('/projects/category/:id', proj.getProjectByCategoryId)
 app.post('/projects', proj.createProject)
 app.put('/projects/:id', proj.updateProject)
 app.delete('/projects/:id', proj.deleteProject)

@@ -21,6 +21,19 @@ const getProjectById = (request, response) => {
 }
 
 
+const getProjectByCategoryId = (request, response) => {
+    const id = parseInt(request.params.id)
+
+    pool.query('SELECT * FROM "awt".projects left join "awt"."Category" on "projects"."CategoryID"  = "Category"."categoryId" where "Category"."categoryId" = $1', [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+
+
+
 const createProject = (request, response) => {
     const { Title, Description, CategoryID, Prereq, MaxStudent } = request.body;
 
@@ -69,4 +82,5 @@ module.exports = {
     createProject,
     updateProject,
     deleteProject,
+    getProjectByCategoryId
 }
