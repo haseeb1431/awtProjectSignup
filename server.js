@@ -52,6 +52,7 @@ app.get('/studentproject/:id', studentproject.getStudentProjectById)
 app.post('/studentproject', studentproject.createStudentProject)
 app.put('/studentproject/:id', studentproject.updateStudentProject)
 app.delete('/studentproject/:id', studentproject.deleteStudentProject)
+app.get('/studentproject/student/:id', studentproject.getStudentProjectByStudentId)
 
 app.get('/category', category.getCategory)
 app.get('/category/:id', category.getCategoryById)
