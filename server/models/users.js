@@ -20,6 +20,17 @@ const getUserById = (request, response) => {
     })
 }
 
+const userLogin = (request, response) => {
+    const { UserEmail, UserPassword } = request.body
+    pool.query('SELECT * FROM "awt"."Users" WHERE "UserEmail" = $1 and "UserPassword"= $2',
+        [UserEmail, UserPassword],
+        (error, results) => {
+            if (error) {
+                throw error
+            }
+            response.status(200).json(results.rows)
+        })
+}
 
 const createUser = (request, response) => {
     const { email, password, usertype } = request.body
@@ -69,4 +80,5 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
+    userLogin
 }

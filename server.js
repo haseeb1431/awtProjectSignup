@@ -36,6 +36,7 @@ app.delete('/projects/:id', proj.deleteProject)
 app.get('/users', user.getUsers)
 app.get('/users/:id', user.getUserById)
 app.post('/users', user.createUser)
+app.post('/login',user.userLogin);
 app.put('/users/:id', user.updateUser)
 app.delete('/users/:id', user.deleteUser)
 
