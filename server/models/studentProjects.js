@@ -3,7 +3,7 @@ const { pool } = require('./db');
 
 const getStudentProject = (request, response) => {
     pool.query('SELECT * FROM awt."StudentProject" stdprj INNER JOIN 	awt."projects" prj on stdprj."ProjectID" = prj."ProjectId"'+ 
-	'INNER JOIN awt."Students" std on stdprj."StudentID"= std."StudentID" ORDER BY "StudentID" ASC', (error, results) => {
+	'INNER JOIN awt."Students" std on stdprj."StudentID"= std."StudentID"', (error, results) => {
         if (error) {
             throw error
         }
