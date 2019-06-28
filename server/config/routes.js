@@ -12,10 +12,10 @@ module.exports = function (app, passport) {
 
     app.get('/projects', proj.getProjects)
     app.get('/projects/:id', proj.getProjectById)
-    app.get('/projects/category/:id', proj.getProjectByCategoryId)
+    app.get('/projects/category/:id', withAuth, proj.getProjectByCategoryId)
     app.post('/projects', proj.createProject)
-    app.put('/projects/:id', proj.updateProject)
-    app.delete('/projects/:id', proj.deleteProject)
+    app.put('/projects/:id', withAuth, proj.updateProject)
+    app.delete('/projects/:id', withAuth, proj.deleteProject)
 
     app.get('/users', user.getUsers)
     app.get('/users/:id', user.getUserById)
@@ -31,18 +31,18 @@ module.exports = function (app, passport) {
     app.delete('/students/:id', student.deleteStudent)
 
 
-    app.get('/studentproject', studentproject.getStudentProject)
+    app.get('/studentproject', withAuth, studentproject.getStudentProject)
     app.get('/studentproject/:id', studentproject.getStudentProjectById)
     app.post('/studentproject', studentproject.createStudentProject)
     app.put('/studentproject/:id', studentproject.updateStudentProject)
     app.delete('/studentproject/:id', studentproject.deleteStudentProject)
     app.get('/studentproject/student/:id', studentproject.getStudentProjectByStudentId)
 
-    app.get('/category', withAuth, category.getCategory)
-    app.get('/category/:id', category.getCategoryById)
-    app.post('/category', category.createCategory)
-    app.put('/category/:id', category.updateCategory)
-    app.delete('/category/:id', category.deleteCategory)
+    app.get('/category', withAuth, category.getCategory);
+    app.get('/category/:id', category.getCategoryById);
+    app.post('/category', withAuth, category.createCategory);
+    app.put('/category/:id', withAuth, category.updateCategory);
+    app.delete('/category/:id', withAuth, category.deleteCategory);
 
     //login or locally authenticate
     app.post('/auth/local',
