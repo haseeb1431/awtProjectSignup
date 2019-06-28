@@ -9,6 +9,8 @@
 # production
 /build
 
+/server/config/authKeys.js
+
 # misc
 .DS_Store
 .env.local

@@ -11,14 +11,14 @@ const getStudents = (request, response) => {
 }
 
 const getStudentById = (request, response) => {
-    const id = parseInt(request.params.id)
+    const id = parseInt(request.params.id);
 
     pool.query('SELECT * FROM "Students" WHERE "StudentID" = $1', [id], (error, results) => {
         if (error) {
             throw error
         }
         response.status(200).json(results.rows)
-    })
+    });
 }
 
 

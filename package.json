@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "debug": "node --inspect server.js"
   },
   "author": "Team _",
   "license": "ISC",
@@ -21,7 +22,9 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
+    "passport-google-token": "^0.1.2",
     "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "pg": "^7.11.0",
     "validator": "^10.11.0"
   },

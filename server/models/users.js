@@ -21,7 +21,7 @@ const getUserById = (request, response) => {
 }
 
 const userLogin = (request, response) => {
-    const { UserEmail, UserPassword } = request.body        
+    const { UserEmail, UserPassword } = request.body
     pool.query('SELECT * FROM "awt"."Users" WHERE "UserEmail" = $1 and "UserPassword"= $2',
         [UserEmail, UserPassword],
         (error, results) => {
@@ -73,6 +73,19 @@ const deleteUser = (request, response) => {
     })
 }
 
+const findOne = (useremail, password, cb) => {
+
+    pool.query('SELECT * FROM "awt"."Users" WHERE "UserEmail" = $1  and "UserPassword"= $2', [useremail, password],
+        (error, results) => {
+            if (!error && results.rowCount > 0) {
+                cb(null, results.rows[0]);
+
+            }
+            else {
+                cb(error, null);
+            }
+        });
+}
 
 module.exports = {
     getUsers,
@@ -80,5 +93,6 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
-    userLogin
+    userLogin,
+    findOne
 }

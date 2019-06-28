@@ -2,18 +2,11 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const http = require('http');
-
+const passport = require('passport');
 const cors = require('cors')
 require('dotenv').config()
 // Set up the express app
 const app = express();
-
-const proj = require('./server/models/projects');
-const user = require('./server/models/users');
-const student = require('./server/models/students');
-const studentproject = require('./server/models/studentProjects');
-const category = require('./server/models/category');
-
 
 //#region App settings
 // Log requests to the console.
@@ -23,49 +16,14 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./server/config/passport')(app, passport);
 //#endregion
 
 //#region Routing
-app.get('/projects', proj.getProjects)
-app.get('/projects/:id', proj.getProjectById)
-app.get('/projects/category/:id', proj.getProjectByCategoryId)
-app.post('/projects', proj.createProject)
-app.put('/projects/:id', proj.updateProject)
-app.delete('/projects/:id', proj.deleteProject)
-
-app.get('/users', user.getUsers)
-app.get('/users/:id', user.getUserById)
-app.post('/users', user.createUser)
-app.post('/login',user.userLogin);
-app.put('/users/:id', user.updateUser)
-app.delete('/users/:id', user.deleteUser)
-
-app.get('/students', student.getStudents)
-app.get('/students/:id', student.getStudentById)
-app.post('/students', student.createStudent)
-app.put('/students/:id', student.updateStudent)
-app.delete('/students/:id', student.deleteStudent)
-
-
-app.get('/studentproject', studentproject.getStudentProject)
-app.get('/studentproject/:id', studentproject.getStudentProjectById)
-app.post('/studentproject', studentproject.createStudentProject)
-app.put('/studentproject/:id', studentproject.updateStudentProject)
-app.delete('/studentproject/:id', studentproject.deleteStudentProject)
-app.get('/studentproject/student/:id', studentproject.getStudentProjectByStudentId)
-
-app.get('/category', category.getCategory)
-app.get('/category/:id', category.getCategoryById)
-app.post('/category', category.createCategory)
-app.put('/category/:id', category.updateCategory)
-app.delete('/category/:id', category.deleteCategory)
-
-
-
-// Setup a default catch-all route that sends back a welcome message in JSON format.
-// app.get('*', (req, res) => res.status(200).send({
-//   message: 'Welcome to the beginning of nothingness.',
-// }));
+require('./server/config/routes')(app, passport);
 //#endregion
 
 
