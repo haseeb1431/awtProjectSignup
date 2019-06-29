@@ -12,8 +12,8 @@ module.exports = function (app, passport) {
 
     app.get('/projects', proj.getProjects)
     app.get('/projects/:id', proj.getProjectById)
-    app.get('/projects/category/:id', withAuth, proj.getProjectByCategoryId)
-    app.post('/projects', proj.createProject)
+    app.get('/projects/category/:id', proj.getProjectByCategoryId)
+    app.post('/projects', withAuth, proj.createProject)
     app.put('/projects/:id', withAuth, proj.updateProject)
     app.delete('/projects/:id', withAuth, proj.deleteProject)
 
@@ -38,7 +38,7 @@ module.exports = function (app, passport) {
     app.delete('/studentproject/:id', studentproject.deleteStudentProject)
     app.get('/studentproject/student/:id', studentproject.getStudentProjectByStudentId)
 
-    app.get('/category', withAuth, category.getCategory);
+    app.get('/category', category.getCategory);
     app.get('/category/:id', category.getCategoryById);
     app.post('/category', withAuth, category.createCategory);
     app.put('/category/:id', withAuth, category.updateCategory);
