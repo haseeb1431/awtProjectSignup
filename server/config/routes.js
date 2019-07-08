@@ -37,6 +37,7 @@ module.exports = function (app, passport) {
     app.put('/studentproject/:id', studentproject.updateStudentProject)
     app.delete('/studentproject/:id', studentproject.deleteStudentProject)
     app.get('/studentproject/student/:id', studentproject.getStudentProjectByStudentId)
+    app.post('/studentprojectbulk', studentproject.createStudentProjectBulk);
 
     app.get('/category', category.getCategory);
     app.get('/category/:id', category.getCategoryById);

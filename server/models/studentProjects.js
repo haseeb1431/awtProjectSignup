@@ -59,6 +59,25 @@ const createStudentProject = (request, response) => {
         })
 }
 
+const createStudentProjectBulk = (request, response) => {
+    var arr = request.body;
+
+    var query = 'INSERT INTO "awt"."StudentProject" ("StudentID", "ProjectID", "Preference") VALUES ';
+
+    arr.forEach(function (item, index) {
+        query += '('+item.studentid + ","+ item.projectid + ","+ item.preference + "),";
+    });
+
+    query = query.slice(0, -1);
+    
+    pool.query(query, (error, result) => {
+        if (error) {
+            throw error
+        }
+        response.status(201).send(`${result.rowCount} Student Project added `)
+    });
+}
+
 
 const updateStudentProject = (request, response) => {
     const id = parseInt(request.params.id)
@@ -96,5 +115,6 @@ module.exports = {
     createStudentProject,
     updateStudentProject,
     deleteStudentProject,
-    getStudentProjectByStudentId
+    getStudentProjectByStudentId,
+    createStudentProjectBulk
 }
