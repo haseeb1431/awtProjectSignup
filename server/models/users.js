@@ -1,4 +1,7 @@
 const { pool } = require('./db');
+var nodemailer = require('nodemailer');
+const authkeys = require('../config/authKeys');
+
 
 const getUsers = (request, response) => {
     pool.query('SELECT * FROM "awt"."Users" ORDER BY "UserID" ASC', (error, results) => {
@@ -87,6 +90,37 @@ const findOne = (useremail, password, cb) => {
         });
 }
 
+
+
+
+const sendEmail = (request, response) => {
+
+    const { email, subject, message } = request.body
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: authkeys.gmailLogin.user,
+            pass: authkeys.gmailLogin.pass
+        }
+    });
+
+    var mailOptions = {
+        from: authkeys.gmailLogin.user,
+        to: email,
+        subject: subject,
+        text: message
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            response.status(500).json(error);
+        } else {
+            response.status(200).json('Email sent: ' + info.response);
+        }
+    });
+}
+
 module.exports = {
     getUsers,
     getUserById,
@@ -94,5 +128,6 @@ module.exports = {
     updateUser,
     deleteUser,
     userLogin,
-    findOne
+    findOne,
+    sendEmail
 }

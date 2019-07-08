@@ -21,8 +21,9 @@ module.exports = function (app, passport) {
     app.get('/users/:id', user.getUserById)
     app.post('/users', user.createUser)
     app.post('/login', user.userLogin);
-    app.put('/users/:id', user.updateUser)
-    app.delete('/users/:id', user.deleteUser)
+    app.put('/users/:id', user.updateUser);
+    app.delete('/users/:id', user.deleteUser);
+    app.post('/sendemail', user.sendEmail);
 
     app.get('/students', student.getStudents)
     app.get('/students/:id', student.getStudentById)
@@ -44,6 +45,7 @@ module.exports = function (app, passport) {
     app.post('/category', withAuth, category.createCategory);
     app.put('/category/:id', withAuth, category.updateCategory);
     app.delete('/category/:id', withAuth, category.deleteCategory);
+    
 
     //login or locally authenticate
     app.post('/auth/local',
