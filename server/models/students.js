@@ -63,6 +63,26 @@ const deleteStudent = (request, response) => {
     })
 }
 
+const createStudentBulk = (request, response) => {
+    var arr = request.body;
+
+    var query = 'INSERT INTO "awt"."Students" ("StudentID", "StudentName", "StudentEmail") VALUES ($1, $2, $3) ON CONFLICT DO NOTHING';
+
+    var totalrows = arr.length;
+    var i = 0;
+    arr.forEach(function (item, index) {
+        pool.query(query, [item.studentid,item.name, item.email], (error, result) => {
+            if (error) {
+                throw error
+            }
+            i = i + 1
+            if (i == totalrows) {
+                response.status(201).json(`${result.rowCount} Student Project added `);
+            }
+        });
+    });
+}
+
 
 module.exports = {
     getStudents,
@@ -70,4 +90,5 @@ module.exports = {
     createStudent,
     updateStudent,
     deleteStudent,
+    createStudentBulk
 }

@@ -29,9 +29,9 @@ module.exports = function (app, passport) {
     app.post('/students', student.createStudent)
     app.put('/students/:id', student.updateStudent)
     app.delete('/students/:id', student.deleteStudent)
+    app.post('/studentsBulk', student.createStudentBulk)
 
-
-    app.get('/studentproject', withAuth, studentproject.getStudentProject)
+    app.get('/studentproject', studentproject.getStudentProject)
     app.get('/studentproject/:id', studentproject.getStudentProjectById)
     app.post('/studentproject', studentproject.createStudentProject)
     app.put('/studentproject/:id', studentproject.updateStudentProject)
