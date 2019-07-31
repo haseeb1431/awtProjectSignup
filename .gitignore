@@ -9,7 +9,8 @@
 # production
 /build
 
-/server/config/authKeys.js
+#Share to avoid project setup hassale only
+#/server/config/authKeys.js
 
 # misc
 .DS_Store

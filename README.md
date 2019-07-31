@@ -3,22 +3,21 @@
 
 ## Geting started
 *Development*
-FOr the first time only pull the code and install the packages locally
+
+For the first time only pull the code and install the packages locally
 ```
 git clone git@github.com:haseeb1431/awtProjectSignup.git.git
 npm install
 npm start
 ```
+Currently we are using Azurepostgress and it will automatically connect to the database hosted in the cloud and application should work without any additional setup. 
+
 after that every time, just run `git pull` to get latest
 
 ```
 git pull
 git branch newbranchName #create a new branch for the task you want to work on 
 git push # once changes are complete, do the git push and then we will merge
-```
-*Build*
-```
-npm run build
 ```
 
 ### Git Commands
